@@ -34,30 +34,36 @@ class newPipe():
     """
     self.data = []
 
-class inputPipe():
+class inputStack():
   def __init__(self, name: str):
     """
     Used to generate current input.
     """
     self.name = name  # No use at the moment.
-    self.data = []    # Generic data object again.
-  
+    self.data = ['']  # Generic data object again.
+    self.cache = newPipe('cache', 1)
+    self.finished = True
+
   def push(self, item):
     """
     Push a character to the stack.
     """
+    if self.data==[]:
+      self.finished = False
     self.data.append(item)
   
-  def pull(self, item):
+  def pull(self):
     """
     Pull the current input and clear the stack.
     """
-    with self.data as temp:  # Used so self.data can be cleared and returned.
-      self.clear()
-      return ''.join(temp)
-  
+    out = ''.join(self.data[1:])
+    self.cache.push(out)
+    self.clear()
+    self.finished = True
+    return out
+
   def clear(self):
     """
     Clear the stack.
     """
-    self.data = []
+    self.data = ['']
